@@ -98,11 +98,36 @@
 				thirdLoginState:false,
 				bindingPhoneModal:false,
 				thirdUserUuid:'',
+				url: {
+					bindingThirdPhone: '/sys/thirdLogin/bindingThirdPhone'
+				}
             };
         },
 		onLoad:function(){
+			// #ifdef APP-PLUS
+			var that=this
+			plus.runtime.getProperty( plus.runtime.appid, function ( wgtinfo ) {
+				that.version=wgtinfo.version
+			});
+			// #endif
 		},
 		computed: {
+		      isSendSMSEnable() {
+		        return this.smsCountDown <= 0 && this.phoneNo.length > 4;
+		      },
+		      getSendBtnText() {
+		        if (this.smsCountDown > 0) {
+		          return this.smsCountDown + '秒后发送';
+		        } else {
+		          return '发送验证码';
+		        }
+		      },
+		      canSMSLogin() {
+		        return this.userName.length > 4 && this.smsCode.length > 4;
+		      },
+		      canPwdLogin() {
+		        return this.userName.length > 4 && this.password.length > 4;
+		      },
 		},
         methods: {
 			 ...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),

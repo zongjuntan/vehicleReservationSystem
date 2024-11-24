@@ -20,7 +20,7 @@
 					</view>
 					<view class="padding text-center margin-top">
 						<u-checkbox-group>
-							<u-checkbox v-model="checkboxValue" label=""></u-checkbox>
+							<u-checkbox v-model="checkboxValue" label=" "></u-checkbox>
 							<u--text size="11" @tap="agreement" type="primary" text="铁门关经开区化工园区车辆行驶规划规则协议"></u--text>
 						</u-checkbox-group>
 					</view>

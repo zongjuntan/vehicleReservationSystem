@@ -47,7 +47,7 @@
         methods: {
 			...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),
             jumpPage(item) {
-                this.$router.push({name: item.route})
+                this.$Router.push({name: item.route})
             }
         },
 		beforeDestroy() {

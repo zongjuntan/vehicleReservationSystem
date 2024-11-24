@@ -25,6 +25,43 @@
 			"style": {}
 		},
 		{
+			"path": "pages/appointment/dangerous/index",
+			"style": {}
+		},
+		{
+			"path": "pages/appointment/dangerousSuccess/index",
+			"style": {}
+		},
+		{
+			"path": "pages/appointment/drivingRoute/index",
+			"style": {}
+		},
+		{
+			"path": "pages/appointment/bindingDetails/index",
+			"style": {}
+		},
+		{
+			"path": "pages/appointment/normal/index",
+			"style": {}
+		},
+		{
+			"path": "pages/appointment/normalSuccess/index",
+			"style": {}
+		},
+		{
+			"path": "pages/applicationRecord/index",
+			"style": {}
+		},
+		{
+			"path": "pages/noteDetails/index",
+			"style": {}
+		},
+
+		{
+			"path": "pages/bindingRecord/index",
+			"style": {}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {}
 		},

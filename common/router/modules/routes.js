@@ -28,6 +28,13 @@ const routes = [
 		},
 	},
 	{
+		path: "/pages/login/register",
+		name: 'register',
+		meta: {
+			title: '注册',
+		},
+	},
+	{
 		path: "/pages/appointment/index",
 		name: 'appointment',
 		meta: {
@@ -35,10 +42,66 @@ const routes = [
 		},
 	},
 	{
-		path: "/pages/login/register",
-		name: 'register',
+		path: "/pages/appointment/dangerous/index",
+		name: 'dangerous',
 		meta: {
-			title: '注册',
+			title: '危险品出入预约',
+		},
+	},
+	{
+		path: "/pages/appointment/dangerousSuccess/index",
+		name: 'dangerousSuccess',
+		meta: {
+			title: '危险品出入预约成功',
+		},
+	},
+	{
+		path: "/pages/appointment/drivingRoute/index",
+		name: 'drivingRoute',
+		meta: {
+			title: '查看行驶路线图',
+		},
+	},
+	{
+		path: "/pages/appointment/bindingDetails/index",
+		name: 'bindingDetails',
+		meta: {
+			title: '查看绑定定位卡',
+		},
+	},
+	{
+		path: "/pages/appointment/normal/index",
+		name: 'normal',
+		meta: {
+			title: '正常出入预约',
+		},
+	},
+	{
+		path: "/pages/appointment/normalSuccess/index",
+		name: 'normalSuccess',
+		meta: {
+			title: '正常出入预约成功',
+		},
+	},
+	{
+		path: "/pages/applicationRecord/index",
+		name: 'applicationRecord',
+		meta: {
+			title: '申请记录',
+		},
+	},
+	{
+		path: "/pages/noteDetails/index",
+		name: 'noteDetails',
+		meta: {
+			title: '申请单详情',
+		},
+	},
+	{
+		path: "/pages/bindingRecord/index",
+		name: 'bindingRecord',
+		meta: {
+			title: '定位卡绑定记录',
 		},
 	},
 	{

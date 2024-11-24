@@ -16,7 +16,7 @@
 				<u-row
 					justify="space-between"
 					gutter="10"
-				>
+				>	
 					<u-col span="5">
 						<u-button type="primary" text="同 意"></u-button>
 					</u-col>
