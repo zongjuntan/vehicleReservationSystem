@@ -7,19 +7,12 @@
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
 				<block v-if="loginWay==1">
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title"><text class="cuIcon-people margin-right-xs"></text>驾驶员姓名:</view>
-						<input class="uni-input" placeholder="请输入驾驶员姓名" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
-					</view>
-					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title"><text class="cuIcon-mobile margin-right-xs"></text>手机号码:</view>
-						<input placeholder="请输入手机号码" name="input" v-model="userName"></input>
+						<view class="title">驾驶员身份证：</view>
+						<input class="uni-input" placeholder="请输入驾驶员身份证"  v-model="password" />
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title"><text class="cuIcon-people margin-right-xs"></text>车辆类型:</view>
-						<input class="uni-input" placeholder="请输入车辆类型" @tap="typeFocus" v-model="password" />
+						<view class="title">所属企业：</view>
+						<input class="uni-input" placeholder="请选择所属企业" @tap="typeFocus" v-model="password" />
 						<view class="action text-lg">
 						    <u-icon
 								@tap="typeFocus"
@@ -27,42 +20,62 @@
 							></u-icon>
 						</view>
 					</view>
-					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title"><text class="cuIcon-people margin-right-xs"></text>车辆车牌:</view>
-						<input class="uni-input" placeholder="请输入车辆车牌" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">运输危化品类型：</view>
+						<input placeholder="请输入运输危化品类型" name="input" v-model="userName"></input>
+					</view>
+					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">运输容量：</view>
+						<input placeholder="请输入运输容量" name="input" v-model="userName"></input>
+						<view class="action text-lg">吨</view>
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title"><text class="cuIcon-people margin-right-xs"></text>同行人员数量:</view>
-						<input class="uni-input" placeholder="请输入同行人员数量" :password="!showPassword" v-model="password" />
+						<view class="title">入园时间：</view>
+						<input class="uni-input" placeholder="请输入入园时间" @focus="focus('showDatetimeIn')" v-model="formData.datetimeIn" />
 						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
+							<text class="cuIcon-calendar"></text>
 						</view>
+					</view>
+					<view>
+						<u-datetime-picker
+							:show="showDatetimeIn"
+							v-model="datetimeIn"
+							mode="datetime"
+							:formatter="formatter"
+							@cancel="showDatetimeIn = false"
+							@confirm="confirmDatetimeIn"
+						></u-datetime-picker>
+					</view>
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">出园时间：</view>
+						<input class="uni-input" placeholder="请输入出园时间"  @focus="focus('showDatetimeOut')" v-model="formData.datetimeOut" />
+						<view class="action text-lg">
+							<text class="cuIcon-calendar"></text>
+						</view>
+					</view>
+					<view>
+						<u-datetime-picker
+							:show="showDatetimeOut"
+							v-model="datetimeOut"
+							mode="datetime"
+							:formatter="formatter"
+							@cancel="showDatetimeOut = false"
+							@confirm="confirmDatetimeOut"
+						></u-datetime-picker>
+					</view>
+					<view class="cu-form-group margin-top shadow-warp align-start">
+						<view class="title">留言：</view>
+						<textarea maxlength="-1" @input="textareaBInput" placeholder="多行文本输入框"></textarea>
 					</view>
 					<view>
 						<u-picker :show="show" @cancel="show = false" :columns="columns" @change="changeHandler" @confirm="confirm"></u-picker>
 					</view>
-					<view class=" margin-top">
-						<u--text size="20" type="primary" text="是否运输危化品？"></u--text>
-					</view>
-					<view class="padding text-center margin-top uni-padding-wrap">
-						<u-row
-						    justify="space-between"
-						    gutter="2"
-						>
-						    <u-col span="5">
-						        <u-button type="primary" text="是"></u-button>
-						    </u-col>
-							<u-col span="5">
-						        <u-button type="primary" text="否"></u-button>
-						    </u-col>
-						</u-row>
-					</view>
 				</block>
             </view>
         </scroll-view>
+		<view class="padding text-center margin-top uni-padding-wrap cu-bar bg-white foot">
+			<u-button type="primary" text="申请驶入" @tap="jumpPage"></u-button>
+		</view>
     </view>
 
 </template>
@@ -79,6 +92,14 @@
                 columns: [
                     ['中国', '美国', '日本']
                 ],
+				formData: {
+					datetimeOut: '',
+					datetimeIn: '',
+				},
+				showDatetimeOut: false,
+				showDatetimeIn: false,
+				datetimeOut: '',
+				datetimeIn: '',
 				checkboxValue: '',
 				shape:'',//round 圆形
 				loading: false,
@@ -98,11 +119,12 @@
 				thirdLoginState:false,
 				bindingPhoneModal:false,
 				thirdUserUuid:'',
-				url: {
-					bindingThirdPhone: '/sys/thirdLogin/bindingThirdPhone'
-				}
             };
         },
+		onReady() {
+			// 微信小程序需要用此写法
+			this.$refs.datetimePicker.setFormatter(this.formatter)
+		},
 		onLoad:function(){
 			// #ifdef APP-PLUS
 			var that=this
@@ -131,11 +153,58 @@
 		},
         methods: {
 			 ...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),
+			jumpPage() {
+				this.$Router.push({name:'dangerousSuccess'})
+			},
+			formatter(type, value) {
+                if (type === 'year') {
+                    return `${value}年`
+                }
+                if (type === 'month') {
+                    return `${value}月`
+                }
+                if (type === 'day') {
+                    return `${value}日`
+                }
+                return value
+            },
+			confirmDatetimeOut(data) {
+				console.log(data, this.formatDate(data.value))
+				this.formData.datetimeOut = this.formatDate(data.value)
+				this.showDatetimeOut = false
+			},
+			confirmDatetimeIn(data) {
+				console.log(data, this.formatDate(data.value))
+				this.formData.datetimeIn = this.formatDate(data.value)
+				this.showDatetimeIn = false
+			},
+			formatDate(timestamp) {
+				if (timestamp) {
+					const date = new Date(timestamp); // 创建 Date 对象
+
+					// 获取年、月、日、时、分、秒
+					const year = date.getFullYear();
+					const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，要加1
+					const day = date.getDate().toString().padStart(2, '0');
+					const hours = date.getHours().toString().padStart(2, '0');
+					const minutes = date.getMinutes().toString().padStart(2, '0');
+					const seconds = date.getSeconds().toString().padStart(2, '0');
+
+					// 格式化为 "YYYY-MM-DD HH:MM:SS"
+					return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+				}
+    		},
+			textareaBInput() {
+				
+			},
 			agreement() {
 				this.$Router.replaceAll({name:'agreement'})
 			},
 			changeHandler(val) {
 				console.log(val)
+			},
+			focus(key) {
+				this[key] = true
 			},
 			typeFocus(e) {
 				this.show = true

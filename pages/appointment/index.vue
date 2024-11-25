@@ -2,18 +2,19 @@
 	<view>
 		<accessReservation :cur="PageCur" v-if="PageCur=='home'" :key="commponent1Key"></accessReservation>
 		<people v-if="PageCur=='people'" :key="commponent2Key"></people>
+		<annotation v-if="PageCur=='annotation'"></annotation>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view :class="PageCur=='home'?'action text-green':'action text-gray'" @click="NavChange" data-cur="home">
 				<view class='cuIcon-homefill'></view>预约
 			</view>
-			<view :class="PageCur=='peoplelis'?'action text-green':'action text-gray'" @click="NavChange" data-cur="peoplelis">
-				<view class='cuIcon-peoplelist'></view>通告
+			<view :class="PageCur=='annotation'?'action text-green':'action text-gray'" @click="NavChange" data-cur="annotation">
+				<view class='cuIcon-noticefill'></view>通告
 			</view>
 			<!-- <view :class="PageCur=='profile'?'action text-green':'action text-gray'" @click="NavChange" data-cur="profile">
 				<view class='cuIcon-profile'></view>发起
 			</view> -->
 			<view :class="PageCur=='people'?'action text-green':'action text-gray'" @click="NavChange" data-cur="people">
-				<view class='cuIcon-people'></view>个人
+				<view class='cuIcon-peoplefill'></view>个人
 			</view>
 		</view>
 	</view>
@@ -21,9 +22,11 @@
 
 <script>
 	import accessReservation from '@/pages/appointment/components/accessReservation.vue'
+	import annotation from '@/pages/annotation/index.vue'
 	export default {
 		components: {
-			accessReservation
+			accessReservation,
+			annotation
 		},
 		data() {
 		return {
@@ -32,8 +35,11 @@
 				commponent2Key: 0,
 			}
 		},
-		onLoad:function(){
+		onLoad:function(query){
 			this.PageCur='home'
+			if (query.route) {
+				this.PageCur= query.route
+			}
 			++this.commponent1Key
 			++this.commponent2Key
 		},

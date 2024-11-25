@@ -202,7 +202,12 @@
 		},{
 			"path": "pages/addressbook/address-detail",
 			"style": {}
-		},{
+		},
+		{
+			"path": "pages/annotation/index",
+			"style": {}
+		},
+		{
 			"path": "pages/annotation/annotationList",
 			"style": {
 				"app-plus" : {

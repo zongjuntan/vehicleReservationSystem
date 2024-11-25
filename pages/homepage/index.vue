@@ -26,15 +26,15 @@
                         name: '车辆预约',
                     },
                     {
-                        route: '',
+                        route: 'annotation',
                         name: '公告',
                     },
                     {
-                        route: '',
+                        route: 'people',
                         name: '消息/个人',
                     },
                     {
-                        route: '',
+                        route: 'bindingRecord',
                         name: '绑定定位卡记录',
                     },
                 ]
@@ -47,7 +47,17 @@
         methods: {
 			...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),
             jumpPage(item) {
-                this.$Router.push({name: item.route})
+                if (item.route == 'people') {
+                    uni.navigateTo({
+						url: `/pages/appointment/index?route=people`  // 传递参数 id
+					});
+                } else if (item.route == 'annotation') {
+                    uni.navigateTo({
+						url: `/pages/appointment/index?route=annotation`  // 传递参数 id
+					});
+                } else {
+                    this.$Router.push({name: item.route})
+                }
             }
         },
 		beforeDestroy() {

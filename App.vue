@@ -155,6 +155,9 @@
 	@import "plugin/colorui/icon.css";
     @import "plugin/colorui/animation.css";
 	@import "@/uni_modules/uview-ui/index.scss";
+	uni-page-body {
+		height: 100%;
+	}
 	.nav-list {
 		display: flex;
 		flex-wrap: wrap;

@@ -198,6 +198,13 @@ const routes = [
 	    },
 	},
 	{
+	    path: '/pages/annotation/index',
+	    name: 'annotation',
+	    meta: {
+	        title: '通知公告',
+	    },
+	},
+	{
 	    path: '/pages/annotation/annotationList',
 	    name: 'annotationList',
 	    meta: {
@@ -216,6 +223,13 @@ const routes = [
 	    name: 'helloWorld',
 	    meta: {
 	        title: 'helloWorld',
+	    },
+	},
+	{
+	    path: '/pages/component/card',
+	    name: 'card',
+	    meta: {
+	        title: 'card',
 	    },
 	},
 ]

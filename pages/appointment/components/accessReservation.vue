@@ -53,10 +53,10 @@
 						    gutter="2"
 						>
 						    <u-col span="5">
-						        <u-button type="primary" text="是"></u-button>
+						        <u-button type="primary" text="是" @tap="jumpPage('dangerous')"></u-button>
 						    </u-col>
 							<u-col span="5">
-						        <u-button type="primary" text="否"></u-button>
+						        <u-button type="primary" text="否" @tap="jumpPage('normal')"></u-button>
 						    </u-col>
 						</u-row>
 					</view>
@@ -106,8 +106,11 @@
 		},
         methods: {
 			 ...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),
+			jumpPage(name) {
+				this.$Router.push({name})
+			},
 			agreement() {
-				this.$Router.replaceAll({name:'agreement'})
+				this.$Router.push({name:'dangerous'})
 			},
 			changeHandler(val) {
 				console.log(val)

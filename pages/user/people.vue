@@ -4,7 +4,7 @@
 			  <!-- 头部logo-->
 		  <view class="UCenter-bg">
 		    <image :src="personalList.avatar" class="png round animation-slide-right margin-bottom-sm" mode="scaleToFill" :style="[{animationDelay: '0.1s'}]"></image>
-		    <image src="https://static.jeecg.com/upload/test/wave_1595818053612.gif" mode="scaleToFill" class="gif-wave"></image>
+		    <!-- <image src="https://static.jeecg.com/upload/test/wave_1595818053612.gif" mode="scaleToFill" class="gif-wave"></image> -->
 		  </view>
 		  <view class="padding flex text-center text-grey bg-white shadow-warp">
 		    <view class="flex flex-sub flex-direction solid-right animation-slide-top" :style="[{animationDelay: '0.2s'}]">
@@ -19,18 +19,18 @@
 		  </view>
 		  <!-- 列表list-->
 		  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-		    <view class="cu-item arrow animation-slide-bottom" :style="[{animationDelay: '0.1s'}]">
+		    <navigator class="cu-item arrow animation-slide-bottom" url="/pages/applicationRecord/index" :style="[{animationDelay: '0.1s'}]">
 		      <view class="content" >
 		        <text class="cuIcon-favorfill text-yellow"></text>
-		        <text class="text-grey">收藏</text>
+		        <text class="text-grey">预约记录</text>
 		      </view>
-		    </view>
-		    <view class="cu-item arrow animation-slide-bottom" :style="[{animationDelay: '0.2s'}]">
+		    </navigator>
+		    <navigator class="cu-item arrow animation-slide-bottom"  url="/pages/noteDetails/index" :style="[{animationDelay: '0.2s'}]">
 		      <view class="content">
-		        <text class="cuIcon-redpacket_fill text-red"></text>
-		        <text class="text-grey">红包</text>
+		        <text class="cuIcon-community text-red"></text>
+		        <text class="text-grey">申请待通过记录</text>
 		      </view>
-		    </view>
+		    </navigator>
 			<view class="cu-item arrow animation-slide-bottom" :style="[{animationDelay: '0.3s'}]" @tap="scan">
 			  <view class="content">
 			    <text class="cuIcon-scan text-red"></text>
