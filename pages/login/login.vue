@@ -2,7 +2,7 @@
 	<view class="zai-box">
         <scroll-view scroll-y class="page">
             <view class="text-center" :style="[{animation: 'show ' + 0.4+ 's 1'}]">
-				<image src="https://static.jeecg.com/upload/test/login4_1595818039175.png" mode='aspectFit' class="zai-logo "></image>
+				<image :src="logo" mode='aspectFit' class="zai-logo"></image>
 				<view class="zai-title text-shadow ">铁门关经济技术开发区化工园区车辆出入预约小程序</view>
 			</view>
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
@@ -13,10 +13,7 @@
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>姓名:</view>
-						<input class="uni-input" placeholder="请输入姓名" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入姓名" v-model="password" />
 					</view>
 					<view class="padding text-center margin-top">
 						<u-checkbox-group>
@@ -89,10 +86,12 @@
 	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
-	
+	import { http } from '@/common/service/service.js' 
+	import logo from '@/static/logo2.png';
     export default {
         data() {
             return {
+				logo,
 				checkboxValue: '',
 				shape:'',//round 圆形
 				loading: false,
@@ -152,6 +151,14 @@
 				this.$Router.push({name:'register'})			
 			},
 			onLogin: function (){
+					// const params = {
+					// 	id: 1,
+					// 	username: 'testuser',
+					// 	password: 'password123', // 加密存储的密码
+					// }
+					// http.post('/api/login',params).then(res => {
+					// 	console.log(res)
+					// })
 					this.$Router.replaceAll({name:'homepage'})
 					return
 			        if(!this.userName || this.userName.length==0){
@@ -291,8 +298,8 @@
     }
 
     .zai-logo {
-        width: 200upx;
-        height: 150px;
+        width: 300upx;
+        height: 400upx;
     }
 
     .zai-title {

@@ -167,7 +167,7 @@
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					.cuIcon-warnfill {
+					.cuIcon-warnfill, .cuIcon-roundcheckfill {
 						font-size: 200upx;
 					}
 				}

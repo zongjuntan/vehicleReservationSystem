@@ -5,17 +5,14 @@
 				<block slot="content">注 册</block>
 			</cu-custom>
             <view class="text-center" :style="[{animation: 'show ' + 0.4+ 's 1'}]">
-				<image src="https://static.jeecg.com/upload/test/login4_1595818039175.png" mode='aspectFit' class="zai-logo "></image>
+				<image :src="logo" mode='aspectFit' class="zai-logo"></image>
 				<view class="zai-title text-shadow ">铁门关经济技术开发区化工园区车辆出入预约小程序</view>
 			</view>
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
 				<block v-if="loginWay==1">
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>驾驶员姓名:</view>
-						<input class="uni-input" placeholder="请输入驾驶员姓名" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入驾驶员姓名" v-model="password" />
 					</view>
 					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-mobile margin-right-xs"></text>手机号码:</view>
@@ -23,14 +20,11 @@
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>所属企业:</view>
-						<input class="uni-input" placeholder="请输入姓名" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入姓名" v-model="password" />
 					</view>
 					<view class="padding text-center margin-top">
 						<u-checkbox-group>
-							<u-checkbox v-model="checkboxValue" label=""></u-checkbox>
+							<u-checkbox v-model="checkboxValue" label=" "></u-checkbox>
 							<u--text size="11" @tap="agreement" type="primary" text="铁门关经开区化工园区车辆行驶规划规则协议"></u--text>
 						</u-checkbox-group>
 					</view>
@@ -96,10 +90,12 @@
 	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
+	import logo from '@/static/logo2.png';
 	
     export default {
         data() {
             return {
+			    logo,
 				checkboxValue: '',
 				shape:'',//round 圆形
 				loading: false,
@@ -153,7 +149,7 @@
         methods: {
 			 ...mapActions([ "mLogin","PhoneLogin","ThirdLogin" ]),
 			agreement() {
-				this.$Router.replaceAll({name:'agreement'})
+				this.$Router.push({name:'agreement'})
 			},
 			onLogin: function (){
 					this.$Router.replaceAll({name:'index'})
@@ -295,8 +291,8 @@
     }
 
     .zai-logo {
-        width: 200upx;
-        height: 150px;
+        width: 300upx;
+        height: 400upx;
     }
 
     .zai-title {
