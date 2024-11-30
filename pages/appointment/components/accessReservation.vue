@@ -5,21 +5,18 @@
 				<block slot="content">出入预约</block>
 			</cu-custom>
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
-				<block v-if="loginWay==1">
+				<block>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>驾驶员姓名:</view>
-						<input class="uni-input" placeholder="请输入驾驶员姓名" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入驾驶员姓名" v-model="formData.driverName" />
 					</view>
 					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-mobile margin-right-xs"></text>手机号码:</view>
-						<input placeholder="请输入手机号码" name="input" v-model="userName"></input>
+						<input placeholder="请输入手机号码" name="input" v-model="formData.phonenumber"></input>
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>车辆类型:</view>
-						<input class="uni-input" placeholder="请输入车辆类型" @tap="typeFocus" v-model="password" />
+						<input class="uni-input" placeholder="请输入车辆类型" @tap="typeFocus" v-model="formData.carType" />
 						<view class="action text-lg">
 						    <u-icon
 								@tap="typeFocus"
@@ -29,17 +26,18 @@
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>车辆车牌:</view>
-						<input class="uni-input" placeholder="请输入车辆车牌" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入车辆车牌" v-model="formData.licensePlate" />
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
 						<view class="title"><text class="cuIcon-people margin-right-xs"></text>同行人员数量:</view>
-						<input class="uni-input" placeholder="请输入同行人员数量" :password="!showPassword" v-model="password" />
-						<view class="action text-lg">
-						    <text :class="[showPassword ? 'cuIcon-attention' : 'cuIcon-attentionforbid']" @click="changePassword"></text>
-						</view>
+						<input class="uni-input" placeholder="请输入同行人员数量" v-model="formData.numberPersonnel" />
+					</view>
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title"><text class="cuIcon-people margin-right-xs"></text>是否运输危化品:</view>
+						<u-radio-group v-model="radioValue">
+							<u-radio shape="circle" label="是" name="1"></u-radio>
+							<u-radio shape="circle" label="否" name="2" class="margin-left"></u-radio>
+						</u-radio-group>
 					</view>
 					<view>
 						<u-picker :show="show" @cancel="show = false" :columns="columns" @change="changeHandler" @confirm="confirm"></u-picker>
@@ -61,43 +59,95 @@
 						</u-row>
 					</view>
 				</block>
+				<block v-if="formData.isHazardousChemicals==1">
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">驾驶员身份证：</view>
+						<input class="uni-input" placeholder="请输入驾驶员身份证"  v-model="formData.cardNumber" />
+					</view>
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']" @tap="typeFocus">
+						<view class="title">所属企业：</view>
+						<input class="uni-input" placeholder="请选择所属企业" :disabled="true" v-model="formData.deptId" />
+						<view class="action text-lg">
+						    <u-icon
+								@tap="typeFocus"
+								name="arrow-right"
+							></u-icon>
+						</view>
+					</view>
+					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">运输危化品类型：</view>
+						<input placeholder="请输入运输危化品类型" name="input" v-model="formData.hazardousChemicalsType"></input>
+					</view>
+					<view class="cu-form-group margin-top  shadow-warp" :class="[shape=='round'?'round':'']">
+						<view class="title">运输容量：</view>
+						<input placeholder="请输入运输容量" name="input" v-model="formData.capacity"></input>
+						<view class="action text-lg">吨</view>
+					</view>
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+						<my-date label="入园时间：" v-model="formData.enterTime" placeholder="请选择入园时间" fields="minute"></my-date>
+					</view>
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+						<my-date label="出园时间：" v-model="formData.outTime" placeholder="请选择出园时间" fields="minute"></my-date>
+					</view>
+					<view class="cu-form-group margin-top shadow-warp align-start">
+						<view class="title">留言：</view>
+						<textarea maxlength="-1" v-model="formData.outTime" placeholder="多行文本输入框"></textarea>
+					</view>
+					<view>
+						
+					</view>
+				</block>
             </view>
         </scroll-view>
+		<view class="padding text-center margin-top margin-bottom uni-padding-wrap">
+			<u-button type="primary" text="申请驶入" @tap="jumpPage"></u-button>
+		</view>
     </view>
 
 </template>
 
 <script>
-	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
-    import configService from '@/common/service/config.service.js';
-	
+	import myDate from '@/components/my-componets/my-date.vue';
     export default {
+		components:{
+			myDate,
+		},
         data() {
             return {
+				checkbox: [{
+					value: 'A',
+					checked: true
+				}, {
+					value: 'B',
+					checked: true
+				}, {
+					value: 'C',
+					checked: false
+				}],
 			    show: false,
                 columns: [
                     ['中国', '美国', '日本']
                 ],
-				checkboxValue: '',
+				radioValue: '',
+				formData: {
+					driverName: '', //驾驶员姓名
+					phonenumber: '', //手机号码
+					userId: '', //关联c_sys_user
+					carType: '', // 车辆类型：1货车，2渣土车，3半挂车，4轿车
+					licensePlate: '', // 车牌
+					numberPersonnel: '', // 同行人员数量
+					isHazardousChemicals: '1', // 是否危化品:0是，1否
+					hazardousChemicalsId: '', // 危险品预约表ID
+					cardNumber: '', // 身份证照
+					deptId: '', // 所属企业
+					hazardousChemicalsType: '', // 运输危化品类型
+					capacity: '', // 容量
+					enterTime: '', // 入园时间
+					outTime: '', // 出院时间
+				},
 				shape:'',//round 圆形
 				loading: false,
-				userName: 'admin',
-				password: '123456',
-				phoneNo: '',
-				smsCode: '',
-				showPassword: true, //是否显示明文
-				loginWay: 1, //1: 账密，2：验证码
-				smsCountDown: 0,
-				smsCountInterval: null,
-				toggleDelay: false,
-				version:'',
-				//第三方登录相关信息
-				thirdType:"",
-				thirdLoginInfo:"",
-				thirdLoginState:false,
-				bindingPhoneModal:false,
-				thirdUserUuid:'',
             };
         },
 		onLoad:function(){
@@ -158,88 +208,6 @@
 			        }).finally(()=>{
 					  this.loading=false;
 				})
-			},
-			saveClientId(){
-				var info = plus.push.getClientInfo();
-				var cid = info.clientid;
-				this.$http.get("/sys/user/saveClientId",{params:{clientId:cid}}).then(res=>{
-					console.log("res::saveClientId>",res)
-					this.$tip.success('登录成功!')
-					this.$Router.replaceAll({name:'index'})
-				})
-			},
-			changePassword() {
-				this.showPassword = !this.showPassword;
-			},
-			onSMSSend() {
-				let smsParams = {};
-				smsParams.mobile=this.phoneNo;
-				smsParams.smsmode="0";
-				let checkPhone = new RegExp(/^[1]([3-9])[0-9]{9}$/);
-                if(!smsParams.mobile || smsParams.mobile.length==0){
-					this.$tip.toast('请输入手机号');
-					return false
-				}
-				if(!checkPhone.test(smsParams.mobile)){
-					this.$tip.toast('请输入正确的手机号');
-					return false
-				}
-				this.$http.post("/sys/sms",smsParams).then(res=>{
-				  if(res.data.success){
-					this.smsCountDown = 60;
-					this.startSMSTimer();
-				  }else{
-					this.smsCountDown = 0;
-					this.$tip.toast(res.data.message);
-				  }
-				});
-			  },
-			startSMSTimer() {
-				this.smsCountInterval = setInterval(() => {
-				  this.smsCountDown--;
-				  if (this.smsCountDown <= 0) {
-					clearInterval(this.smsCountInterval);
-				  }
-				}, 1000);
-			},
-			onSMSLogin() {
-				let checkPhone = new RegExp(/^[1]([3-9])[0-9]{9}$/);
-				
-				if(!this.phoneNo || this.phoneNo.length==0){
-				  this.$tip.toast('请填写手机号');
-				  return;
-				}
-				if(!checkPhone.test(this.phoneNo)){
-					this.$tip.toast('请输入正确的手机号');
-					return false
-				}
-				if(!this.smsCode || this.smsCode.length==0){
-				  this.$tip.toast('请填短信验证码');
-				  return;
-				}
-				let loginParams = {
-				  mobile:this.phoneNo,
-				  captcha:this.smsCode
-				};
-				this.PhoneLogin(loginParams).then((res) => {
-				  console.log("res====》",res)
-				  if(res.data.success){
-					this.$tip.success('登录成功!')
-					this.$Router.replaceAll({name:'index'})
-				  }else{
-					this.$tip.error(res.data.message);
-				  }
-				}).catch((err) => {
-				  let msg = ((err.response || {}).data || {}).message || err.data.message || "请求出现错误，请稍后再试"
-				  this.$tip.error(msg);
-				});
-			},
-			loginSuccess() {
-			  // 登陆成功，重定向到主页
-			  this.$Router.replace({name:'index'})
-			},
-			requestFailed(err) {
-			  this.$message.warning("登录失败")
 			},
         },
 		beforeDestroy() {

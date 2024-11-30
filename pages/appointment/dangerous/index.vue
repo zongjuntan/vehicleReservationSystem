@@ -10,9 +10,9 @@
 						<view class="title">驾驶员身份证：</view>
 						<input class="uni-input" placeholder="请输入驾驶员身份证"  v-model="password" />
 					</view>
-					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
+					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']" @tap="typeFocus">
 						<view class="title">所属企业：</view>
-						<input class="uni-input" placeholder="请选择所属企业" @tap="typeFocus" v-model="password" />
+						<input class="uni-input" placeholder="请选择所属企业" :disabled="true" v-model="password" />
 						<view class="action text-lg">
 						    <u-icon
 								@tap="typeFocus"
@@ -30,45 +30,17 @@
 						<view class="action text-lg">吨</view>
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title">入园时间：</view>
-						<input class="uni-input" placeholder="请输入入园时间" @focus="focus('showDatetimeIn')" v-model="formData.datetimeIn" />
-						<view class="action text-lg">
-							<text class="cuIcon-calendar"></text>
-						</view>
-					</view>
-					<view>
-						<u-datetime-picker
-							:show="showDatetimeIn"
-							v-model="datetimeIn"
-							mode="datetime"
-							:formatter="formatter"
-							@cancel="showDatetimeIn = false"
-							@confirm="confirmDatetimeIn"
-						></u-datetime-picker>
+						<my-date label="入园时间：" v-model="formData.datetimeIn" placeholder="请选择入园时间" fields="minute"></my-date>
 					</view>
 					<view class="cu-form-group margin-top shadow-warp" :class="[shape=='round'?'round':'']">
-						<view class="title">出园时间：</view>
-						<input class="uni-input" placeholder="请输入出园时间"  @focus="focus('showDatetimeOut')" v-model="formData.datetimeOut" />
-						<view class="action text-lg">
-							<text class="cuIcon-calendar"></text>
-						</view>
-					</view>
-					<view>
-						<u-datetime-picker
-							:show="showDatetimeOut"
-							v-model="datetimeOut"
-							mode="datetime"
-							:formatter="formatter"
-							@cancel="showDatetimeOut = false"
-							@confirm="confirmDatetimeOut"
-						></u-datetime-picker>
+						<my-date label="出园时间：" v-model="formData.datetimeOut" placeholder="请选择出园时间" fields="minute"></my-date>
 					</view>
 					<view class="cu-form-group margin-top shadow-warp align-start">
 						<view class="title">留言：</view>
 						<textarea maxlength="-1" @input="textareaBInput" placeholder="多行文本输入框"></textarea>
 					</view>
 					<view>
-						<u-picker :show="show" @cancel="show = false" :columns="columns" @change="changeHandler" @confirm="confirm"></u-picker>
+						
 					</view>
 				</block>
             </view>
@@ -84,8 +56,13 @@
 	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
+	import myDate from '@/components/my-componets/my-date.vue';
+	import mySelect from '@/components/my-componets/my-select.vue';
 	
     export default {
+		components:{
+			myDate,
+		},
         data() {
             return {
 			    show: false,
@@ -123,7 +100,9 @@
         },
 		onReady() {
 			// 微信小程序需要用此写法
-			this.$refs.datetimePicker.setFormatter(this.formatter)
+			if (this.$refs.datetimePicker) {
+				this.$refs.datetimePicker.setFormatter(this.formatter)
+			}
 		},
 		onLoad:function(){
 			// #ifdef APP-PLUS
@@ -165,6 +144,12 @@
                 }
                 if (type === 'day') {
                     return `${value}日`
+                }
+				if (type === 'hour') {
+                    return `${value}时`
+                }
+				if (type === 'minute') {
+                    return `${value}分`
                 }
                 return value
             },
@@ -344,52 +329,6 @@
 <style>
     .login-paddingtop {
         padding-top: 100upx;
-    }
-
-    .zai-box {
-        padding: 0 20upx;
-        padding-top: 100upx;
-        position: relative;
-    }
-
-    .zai-logo {
-        width: 200upx;
-        height: 150px;
-    }
-
-    .zai-title {
-       font-size: 40upx;
-       color: #000000;
-       text-align: center;
-	   padding: 20upx;
-    }
-
-    .input-placeholder, .zai-input {
-        color: #94afce;
-    }
-
-    .zai-label {
-        padding: 60upx 0;
-        text-align: center;
-        font-size: 30upx;
-        color: #a7b6d0;
-    }
-
-    .zai-btn {
-        background: #ff65a3;
-        color: #fff;
-        border: 0;
-        border-radius: 100upx;
-        font-size: 36upx;
-    }
-
-    .zai-btn:after {
-        border: 0;
-    }
-
-    /*按钮点击效果*/
-    .zai-btn.button-hover {
-        transform: translate(1upx, 1upx);
     }
 
 </style>

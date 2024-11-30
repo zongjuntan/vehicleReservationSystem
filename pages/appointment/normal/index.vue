@@ -114,7 +114,9 @@
         },
 		onReady() {
 			// 微信小程序需要用此写法
-			this.$refs.datetimePicker.setFormatter(this.formatter)
+			if (this.$refs.datetimePicker) {
+				this.$refs.datetimePicker.setFormatter(this.formatter)
+			}
 		},
 		onLoad:function(){
 			// #ifdef APP-PLUS
@@ -148,16 +150,14 @@
 				this.$Router.push({name:'normalSuccess'})
 			},
 			formatter(type, value) {
-                if (type === 'year') {
-                    return `${value}年`
-                }
-                if (type === 'month') {
-                    return `${value}月`
-                }
-                if (type === 'day') {
-                    return `${value}日`
-                }
-                return value
+				const params = {
+					year: '年',
+					month: '月',
+					day: '日',
+					hour: '时',
+					minute: '分',
+				}
+				return value + params[type]
             },
 			confirmDatetimeOut(data) {
 				console.log(data, this.formatDate(data.value))

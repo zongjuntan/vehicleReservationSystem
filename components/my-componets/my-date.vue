@@ -1,5 +1,5 @@
 <template>
-		<view class="cu-form-group" @click="timechange">
+		<view class="jun-form-group" @click="timechange">
 			<view class="title"><text class="text-red" v-if="required">*</text>{{label}}</view>
 			<input
 			  :placeholder="placeholder"
@@ -10,13 +10,16 @@
 			<w-picker
 			    :visible.sync="visible"
 				ref="picker" 
-			    mode="date" 
+			    mode="date"
 			    startYear="2020" 
 			    endYear="2100"
 				:value="value"
 			    :fields="fields"
 			    @confirm="onConfirm($event,'date')"
 			 ></w-picker>
+			 <view class="action text-lg">
+				<text class="cuIcon-calendar"></text>
+			</view>
 		</view>
 </template>
 
@@ -89,5 +92,11 @@
 </script>
 	
 <style scoped>
-	
+	.jun-form-group {
+		background-color: #ffffff;
+		display: flex;
+		align-items: center;
+		min-height: 100upx;
+		justify-content: space-between;
+	}
 </style>
