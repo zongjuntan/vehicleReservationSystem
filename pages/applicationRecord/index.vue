@@ -56,7 +56,7 @@
 <script>
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
-	
+	import { http } from '@/common/service/service.js'
     export default {
 		components: {
 			// card
@@ -90,11 +90,23 @@
             };
         },
 		onLoad:function(){
+			this.init()
 		},
 		computed: {
 
 		},
         methods: {
+			init() {
+				http.get('/reservation/exit/list', this.formData).then(res => {
+					console.log(res)
+					if (res.code == 200) {
+					} else {
+					}
+					
+				}).catch((err) => {
+					}).finally(()=>{
+				})
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60

@@ -62,7 +62,7 @@
 <script>
 	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
-	import { http } from '@/common/service/service.js' 
+	import { http } from '@/common/service/service.js'
 	import logo from '@/static/logo2.png';
     export default {
         data() {
@@ -87,6 +87,8 @@
 				this.$Router.push({name:'register'})			
 			},
 			onLogin: function (){
+					// this.$Router.replaceAll({name:'homepage'})
+					// return
 					let checkPhone = new RegExp(/^[1]([3-9])[0-9]{9}$/);
 					if(!this.phonenumber || this.phonenumber.length==0){
 						this.$tip.toast('请填写手机号');

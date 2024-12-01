@@ -41,7 +41,7 @@ http.validateStatus = (statusCode) => {
 http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
   config.header = {
     ...config.header,
-     'X-Access-Token':getTokenStorage()
+     'access_token':getTokenStorage()
   }
   /*
   if (!token) { // 如果token不存在，调用cancel 会取消本次请求，但是该函数的catch() 仍会执行
