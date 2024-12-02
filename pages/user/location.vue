@@ -35,7 +35,7 @@
 			  　　 title:'你在哪了',//标注点名
 			  　　 alpha:0.5,   //透明度
 			  　　 /* label:{//为标记点旁边增加标签   //因背景颜色H5不支持
-				  　　 content:'北京国炬公司',//文本
+				  　　 content:'广州宇宙',//文本
 				　　　 color:'red',//文本颜色
 					　 fontSize:24,//文字大小
 					   x:5,//label的坐标，原点是 marker 对应的经纬度
@@ -48,7 +48,7 @@
 					   textAlign:'right'//文本对齐方式。
 			   }, */
 			   callout:{//自定义标记点上方的气泡窗口 点击有效  
-			   　　content:'北京国炬公司',//文本
+			   　　content:'广州宇宙',//文本
 			   　　color:'#ffffff',//文字颜色
 			   　　fontSize:14,//文本大小
 			   　　borderRadius:2,//边框圆角

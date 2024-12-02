@@ -2,7 +2,7 @@
 	<view class="zai-box">
         <scroll-view scroll-y class="page">
             <view class="text-center" :style="[{animation: 'show ' + 0.4+ 's 1'}]">
-				<image :src="logo" mode='aspectFit' class="zai-logo"></image>
+				<image :src="$config.imgUrl + '/static/logo2.png'" mode='aspectFit' class="zai-logo"></image>
 				<view class="zai-title text-shadow ">铁门关经济技术开发区化工园区车辆出入预约小程序</view>
 			</view>
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
@@ -16,8 +16,8 @@
 						<input placeholder="请输入手机号码" name="input" v-model="phonenumber"></input>
 					</view>
 					<view class="padding text-center margin-top">
-						<u-checkbox-group>
-							<u-checkbox v-model="checkboxValue" label=" "></u-checkbox>
+						<u-checkbox-group v-model="checkboxValue" >
+							<u-checkbox label=" " name="1"></u-checkbox>
 							<u--text size="11" @tap="agreement" type="primary" text="铁门关经开区化工园区车辆行驶规划规则协议"></u--text>
 						</u-checkbox-group>
 					</view>
@@ -52,7 +52,7 @@
 		<!-- 登录加载弹窗 -->
 		<view class="cu-load load-modal" v-if="loading">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
-			<image :src="logo" mode="aspectFit" class="round"></image>
+			<image :src="$config.imgUrl + '/static/logo2.png'" mode="aspectFit" class="round"></image>
 			<view class="gray-text">登录中...</view>
 		</view>
     </view>
@@ -63,15 +63,16 @@
 	import { ACCESS_TOKEN,USER_NAME,USER_INFO } from "@/common/util/constants"
 	import { mapActions } from "vuex"
 	import { http } from '@/common/service/service.js'
-	import logo from '@/static/logo2.png';
+	// import logo from '@/static/logo2.png';
     export default {
         data() {
             return {
-				logo,
+				// logo,
 				shape:'',//round 圆形
 				loading: false,
 				username: 'admin',
 				phonenumber: '18888888888',
+				checkboxValue: [],
             };
         },
 		onLoad:function(){
@@ -87,44 +88,46 @@
 				this.$Router.push({name:'register'})			
 			},
 			onLogin: function (){
-					// this.$Router.replaceAll({name:'homepage'})
-					// return
-					let checkPhone = new RegExp(/^[1]([3-9])[0-9]{9}$/);
-					if(!this.phonenumber || this.phonenumber.length==0){
-						this.$tip.toast('请填写手机号');
-						return;
+				let checkPhone = new RegExp(/^[1]([3-9])[0-9]{9}$/);
+				if(!this.username || this.username.length==0){
+				  this.$tip.toast('请填写用户名');
+				  return;
+				}
+				if(!this.phonenumber || this.phonenumber.length==0){
+					this.$tip.toast('请填写手机号');
+					return;
+				}
+				if(!checkPhone.test(this.phonenumber)){
+					this.$tip.toast('请输入正确的手机号');
+					return false
+				}
+				if(this.checkboxValue.length==0){
+				  this.$tip.toast('请认真查看协议并勾选后登录');
+				  return;
+				}
+				this.loading = true;
+				const params = {
+					deptId: 1,
+					username: this.username,
+					phonenumber: this.phonenumber, // 加密存储的密码
+				}
+				http.post('/auth/mobileLogin',params).then(res => {
+					console.log(res)
+					if (res.code == 200) {
+						uni.setStorageSync(ACCESS_TOKEN, res.data['access_token'])
+						this.$Router.replaceAll({name:'homepage'})
+						this.$tip.success('登录成功!')
+					} else {
+						this.$tip.alert(res.msg);
 					}
-					if(!checkPhone.test(this.phonenumber)){
-						this.$tip.toast('请输入正确的手机号');
-						return false
-					}
-					 if(!this.username || this.username.length==0){
-			          this.$tip.toast('请填写用户名');
-			          return;
-			        }
-					this.loading = true;
-					const params = {
-						deptId: 1,
-						username: this.username,
-						phonenumber: this.phonenumber, // 加密存储的密码
-					}
-					http.post('/auth/mobileLogin',params).then(res => {
-						console.log(res)
-						if (res.code == 200) {
-							uni.setStorageSync(ACCESS_TOKEN, res.data['access_token'])
-							this.$Router.replaceAll({name:'homepage'})
-							this.$tip.success('登录成功!')
-						} else {
-							this.$tip.alert(res.msg);
-						}
-						
-					}).catch((err) => {
-						let msg = err.data.message || "请求出现错误，请稍后再试"
-						this.loading=false;
-						this.$tip.alert(msg);
-						}).finally(()=>{
-						this.loading=false;
-					})
+					
+				}).catch((err) => {
+					let msg = err.data.message || "请求出现错误，请稍后再试"
+					this.loading=false;
+					this.$tip.alert(msg);
+					}).finally(()=>{
+					this.loading=false;
+				})
 			},
         },
 		beforeDestroy() {

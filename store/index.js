@@ -13,7 +13,8 @@ export default new Vuex.Store({
     username: '',
     realname: '',
     welcome: '',
-    avatar: ''
+    avatar: '',
+    imgUrl: 'http://106.53.26.57',
   },
   mutations: {
     SET_TOKEN: (state, token) => {

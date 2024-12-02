@@ -5,7 +5,7 @@
 				<block slot="content">注 册</block>
 			</cu-custom>
             <view class="text-center" :style="[{animation: 'show ' + 0.4+ 's 1'}]">
-				<image :src="logo" mode='aspectFit' class="zai-logo"></image>
+				<image  :src="$config.imgUrl + '/static/logo2.png'"  mode='aspectFit' class="zai-logo"></image>
 				<view class="zai-title text-shadow ">铁门关经济技术开发区化工园区车辆出入预约小程序</view>
 			</view>
             <view class="box padding-lr-xl login-paddingtop" :style="[{animation: 'show ' + 0.6+ 's 1'}]">
@@ -44,7 +44,7 @@
 		<!-- 登录加载弹窗 -->
 		<view class="cu-load load-modal" v-if="loading">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
-			<image :src="logo" mode="aspectFit" class="round"></image>
+			<image :src="$config.imgUrl + '/static/logo2.png'" mode="aspectFit" class="round"></image>
 			<view class="gray-text">注册中...</view>
 		</view>
     </view>
@@ -53,13 +53,13 @@
 
 <script>
 	import { mapActions } from "vuex"
-	import logo from '@/static/logo2.png';
+	// import logo from '@/static/logo2.png';
 	import { http } from '@/common/service/service.js' 
 	
     export default {
         data() {
             return {
-			    logo,
+			    // logo,
 				shape: '',
 				deptId: '1',
 				checkboxValue: '',

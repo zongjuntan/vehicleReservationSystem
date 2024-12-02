@@ -10,6 +10,7 @@ if (process.env.NODE_ENV == 'development') {
 let staticDomainURL = BASE_URL+ '/sys/common/static';
 
 const configService = {
+	imgUrl: 'http://106.53.26.57',
 	apiUrl: BASE_URL,
 	staticDomainURL: staticDomainURL
 };

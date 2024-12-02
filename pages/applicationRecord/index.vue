@@ -5,13 +5,15 @@
 				<block slot="content">申请记录</block>
 			</cu-custom>
 		</view>
-		
-		<view class="container"  :style="[{animation: 'show ' + 0.6+ 's 1'}]">
+		<view class="tabList">
 			<scroll-view scroll-x class="bg-white nav" scroll-with-animation :scroll-left="scrollLeft">
 				<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in tabList" :key="index" @tap="tabSelect" :data-id="index">
 					{{item.label}}
 				</view>
 			</scroll-view>
+		</view>
+		<view class="container"  :style="[{animation: 'show ' + 0.6+ 's 1'}]">
+			
 			<scroll-view scroll-y class="page margin-top">
 				<!-- <view>
 					<u-skeleton
@@ -20,27 +22,33 @@
 					loading
 				></u-skeleton>
 				</view> -->
-				<view class="card">
+				<view class="card" v-for="item in dataList" @tap="jumpDetail(item)">
 					<view class="title" style="text-align: center;">
 						<u--text size="20" text="申请单信息"></u--text>
 					</view>
 					<view class="item">
 						<view class="name">
-							<u--text type="info" text="定位卡号:"></u--text>
+							<u--text type="info" text="驾驶员:"></u--text>
 						</view>
-						<u--text  text="45666976321"></u--text>
+						<u--text :text="item.driverName"></u--text>
 					</view>
 					<view class="item">
 						<view class="name">
-							<u--text type="info" text="绑定人姓名:" class="name"></u--text>
+							<u--text type="info" text="所属企业:" class="name"></u--text>
 						</view>
-						<u--text  text="注意定位权限申请等原属于app.json的内容，在uni-app中是在manifest中配置"></u--text>
+						<u--text :text="enterprise(item.deptId)"></u--text>
 					</view>
 					<view class="item">
 						<view class="name">
-							<u--text type="info" text="银行卡:" class="name"></u--text>
+							<u--text type="info" text="车牌号:" class="name"></u--text>
 						</view>
-						<u--text  text="45666976321"></u--text>
+						<u--text :text="item.licensePlate"></u--text>
+					</view>
+					<view class="item">
+						<view class="name">
+							<u--text type="info" text="绑定定位卡:" class="name"></u--text>
+						</view>
+						<u--text text="暂无..."></u--text>
 					</view>
 				</view>
 			</scroll-view>
@@ -57,6 +65,7 @@
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
 	import { http } from '@/common/service/service.js'
+	import options from '@/utils/options.js';
     export default {
 		components: {
 			// card
@@ -65,6 +74,7 @@
             return {
 				TabCur: 0,
 				scrollLeft: 0,
+				dataList: [],
 				tabList: [
 					{
 						label: '待审核',
@@ -93,19 +103,29 @@
 			this.init()
 		},
 		computed: {
-
+			
 		},
         methods: {
 			init() {
 				http.get('/reservation/exit/list', this.formData).then(res => {
 					console.log(res)
 					if (res.code == 200) {
+						this.dataList = res.rows
 					} else {
 					}
 					
 				}).catch((err) => {
 					}).finally(()=>{
 				})
+			},
+			enterprise(id) {
+				const target = options.enterprise.find(item => item.id == id)
+				return target?.label || ''
+			},
+			jumpDetail(item) {
+				uni.navigateTo({
+					url: `/pages/noteDetails/index?id=${item.id}`  // 传递参数 id
+				});
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
@@ -127,6 +147,9 @@
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		// .tabList {
+		// 	margin: 10upx;
+		// }
 		.container {
 			flex: 1;
 			overflow-y: auto;

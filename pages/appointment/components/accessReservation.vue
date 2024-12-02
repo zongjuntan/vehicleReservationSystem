@@ -113,7 +113,7 @@
 	import { mapActions } from "vuex"
 	import myDate from '@/components/my-componets/my-date.vue';
 	import myPicker from '@/components/my-componets/my-picker.vue';
-	import options from './options';
+	import options from '@/utils/options.js';
 	import { http } from '@/common/service/service.js'
     export default {
 		components:{

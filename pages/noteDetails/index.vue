@@ -116,27 +116,45 @@
 <script>
 	import { mapActions } from "vuex"
     import configService from '@/common/service/config.service.js';
-	
+	import { http } from '@/common/service/service.js'
     export default {
 		components: {
 			// card
 		},
         data() {
             return {
+				dataList: [],
 				basicsList: [
 					{cuIcon: 'usefullfill',name: '申请'}, 
 					{cuIcon: 'roundclosefill',name: '企业'},
 					{cuIcon: 'roundcheckfill',name: '园区'}
 				],
-				basics: 0
+				basics: 0,
+				noteId: '',
             };
         },
-		onLoad:function(){
+		onLoad:function(query){
+			if (query.id) {
+				// this.noteId = query.id
+				this.init(query.id)
+			}
 		},
 		computed: {
 
 		},
         methods: {
+			init(entranceExitId) {
+				http.get('/reservation/examine/list', {params:{ entranceExitId }}).then(res => {
+					console.log(res)
+					if (res.code == 200) {
+						this.dataList = res.rows
+					} else {
+					}
+					
+				}).catch((err) => {
+					}).finally(()=>{
+				})
+			},
 			BackPage() {
 				uni.navigateBack({
 					delta: 1
